@@ -27,8 +27,6 @@ public class MainActivity extends AppCompatActivity {
     int poweredNumber = 0;
     int sign = 1;
 
-    int digit1 = 0;
-    int digit2 = 0;
     int currentIntegerDigit = 0;
     int currentFractionDigit = 0;
 
