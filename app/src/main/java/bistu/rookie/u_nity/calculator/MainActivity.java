@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         Button nine = (Button) findViewById(R.id.Nine);
 
         Button minus = (Button) findViewById(R.id.Minus);
-        final Button clear = (Button) findViewById(R.id.Clear);
+        Button clear = (Button) findViewById(R.id.Clear);
         Button plus = (Button) findViewById(R.id.Plus);
         Button substract = (Button) findViewById(R.id.Subtract);
         Button multiply = (Button) findViewById(R.id.Multiply);
@@ -71,6 +71,10 @@ public class MainActivity extends AppCompatActivity {
         Button sin = (Button) findViewById(R.id.Sin);
         Button cos = (Button) findViewById(R.id.Cos);
         Button power = (Button) findViewById(R.id.Power);
+
+        Button inchToCm = (Button) findViewById(R.id.InchToCm);
+        Button kmToMile = (Button) findViewById(R.id.KmToMile);
+        Button rmbToDollar = (Button) findViewById(R.id.RmbToDollar);
 
         Button bin = (Button) findViewById(R.id.Bin);
         Button oct = (Button) findViewById(R.id.Oct);
@@ -226,7 +230,7 @@ public class MainActivity extends AppCompatActivity {
                 if (currentNumber == 0) {
                     hasEdited = false;
                 }
-                if (hasEdited && currentNumber == 1) {
+                if (hasEdited && currentNumber == 1 || currentNumber == 2) {
                     operate();
                     display.setText(nf.format(number[0]));
                 }
@@ -247,7 +251,7 @@ public class MainActivity extends AppCompatActivity {
                 if (currentNumber == 0) {
                     hasEdited = false;
                 }
-                if (hasEdited && currentNumber == 1) {
+                if (hasEdited && currentNumber == 1 || currentNumber == 2) {
                     operate();
                     display.setText(nf.format(number[0]));
                 }
@@ -268,7 +272,7 @@ public class MainActivity extends AppCompatActivity {
                 if (currentNumber == 0) {
                     hasEdited = false;
                 }
-                if (hasEdited && currentNumber == 1) {
+                if (hasEdited && currentNumber == 1 || currentNumber == 2) {
                     operate();
                     display.setText(nf.format(number[0]));
                 }
@@ -289,7 +293,7 @@ public class MainActivity extends AppCompatActivity {
                 if (currentNumber == 0) {
                     hasEdited = false;
                 }
-                if (hasEdited && currentNumber == 1) {
+                if (hasEdited && currentNumber == 1 || currentNumber == 2) {
                     operate();
                     display.setText(nf.format(number[0]));
                 }
@@ -307,13 +311,6 @@ public class MainActivity extends AppCompatActivity {
         equal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isPowering) {
-                    number[poweredNumber] = Math.pow(number[poweredNumber], number[currentNumber]);
-                    currentNumber = poweredNumber;
-                    number[2] = 0;
-                    display.setText(nf.format(number[currentNumber]));
-                    isPowering = false;
-                }
                 operate();
                 display.setText(nf.format(number[0]));
             }
@@ -347,9 +344,39 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 isPowering = true;
+                isEditIntegerPart = true;
+                currentFractionDigit = 0;
+                nf.setMinimumFractionDigits(currentFractionDigit);
                 poweredNumber = currentNumber;
                 currentNumber = 2;
                 display.setText(nf.format(number[currentNumber]));
+            }
+        });
+
+        inchToCm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                number[currentNumber] =  2.54 * number[currentNumber];
+                display.setText(nf.format(number[currentNumber]));
+                Toast.makeText(MainActivity.this, "Centimeter", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        kmToMile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                number[currentNumber] =  0.621 * number[currentNumber];
+                display.setText(nf.format(number[currentNumber]));
+                Toast.makeText(MainActivity.this, "Mile", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        rmbToDollar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                number[currentNumber] =  0.1476 * number[currentNumber];
+                display.setText(nf.format(number[currentNumber]));
+                Toast.makeText(MainActivity.this, "Dollar", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -415,6 +442,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void operate() {
+        if (isPowering) {
+            number[poweredNumber] = Math.pow(number[poweredNumber], number[currentNumber]);
+            currentNumber = poweredNumber;
+            number[2] = 0;
+            isPowering = false;
+        }
         nf.setMinimumFractionDigits(0);
         switch (operateor) {
             case op_plus:
@@ -449,6 +482,7 @@ public class MainActivity extends AppCompatActivity {
         sign = 1;
         isEditIntegerPart = true;
         hasEdited = false;
+        isPowering = false;
         isMinus = false;
         nf.setMinimumFractionDigits(currentFractionDigit);
     }

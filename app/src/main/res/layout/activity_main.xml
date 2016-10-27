@@ -182,7 +182,32 @@
             android:id="@+id/Power"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="pow()"/>
+            android:text="pow(x,y)"/>
+
+    </TableRow>
+
+
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/InchToCm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="in to cm"/>
+
+        <Button
+            android:id="@+id/KmToMile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="km to mile"/>
+
+        <Button
+            android:id="@+id/RmbToDollar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" ¥  to  $ "/>
 
     </TableRow>
 
